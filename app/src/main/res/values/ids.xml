@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="history" type="id" />
+    <item name="result" type="id" />
+
+    <item name="button_item" type="id" />
+    <item name="button_item_text" type="id" />
+    <item name="button_zero" type="id" />
+    <item name="button_one" type="id" />
+    <item name="button_two" type="id" />
+    <item name="button_three" type="id" />
+    <item name="button_four" type="id" />
+    <item name="button_five" type="id" />
+    <item name="button_six" type="id" />
+    <item name="button_seven" type="id" />
+    <item name="button_eight" type="id" />
+    <item name="button_nine" type="id" />
+
+    <item name="button_dot" type="id" />
+    <item name="button_equal" type="id" />
+
+    <item name="button_del" type="id" />
+    <item name="button_divide" type="id" />
+    <item name="button_multiply" type="id" />
+    <item name="button_minus" type="id" />
+    <item name="button_plus" type="id" />
+
+    <item name="numbersLayout" type="id" />
+    <item name="symbolsLayout" type="id" />
+    <item name="bottom_container" type="id"/>
+
+</resources>
