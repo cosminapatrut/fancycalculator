@@ -1,10 +1,8 @@
 package com.example.fancycalculator
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.fancycalculator.model.OperationImpl
-import com.example.fancycalculator.model.PLUS
+import com.example.fancycalculator.model.*
 import com.example.fancycalculator.presenter.CalculatorPresenter
 import com.example.fancycalculator.view.ButtonItemUi
 import com.example.fancycalculator.view.Calculator
@@ -17,7 +15,7 @@ class MainActivity : AppCompatActivity(), Calculator {
     private val ui = MainActivityUi()
     lateinit var buttons: List<ButtonItemUi>
     var operationImpl = OperationImpl()
-    var calculator = CalculatorPresenter(operationImpl,this, applicationContext)
+    lateinit var calculator : CalculatorPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,27 +36,40 @@ class MainActivity : AppCompatActivity(), Calculator {
             ui.eightBtn,
             ui.nineBtn
         )
-
-        ui.plusBtn.view.setOnClickListener {
+        calculator = CalculatorPresenter(operationImpl,this)
+        ui.plusBtn.view.onClick {
             calculator.handleOperation(PLUS)
         }
-
-        buttons.forEach {
-            it.view.setOnClickListener {
-                ui.result.text = "no"
+        ui.minusBtn.view.onClick {
+            calculator.handleOperation(MINUS)
+        }
+        ui.multiplyBtn.view.onClick {
+            calculator.handleOperation(MULTIPLY)
+        }
+        ui.divideBtn.view.onClick {
+            calculator.handleOperation(DIVIDE)
+        }
+        ui.equalBtn.view.onClick {
+            calculator.handleEquals()
+        }
+        ui.delBtn.view.onClick {
+            calculator.handleDelete()
+        }
+        ui.dotBtn.view.onClick {
+            calculator.handleDot()
+        }
+        buttons.forEach { it ->
+            it.view.onClick {
+                it?.id?.let { it1 -> calculator.numberClicked(it1) }
             }
         }
     }
 
-    override fun setValue(value: String, context: Context) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun setValue(value: String) {
+        ui.result.text = value
     }
 
-    override fun setValueDouble(d: Double) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun setFormula(value: String, context: Context) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun setFormula(value: String) {
+        ui.history.text = value
     }
 }

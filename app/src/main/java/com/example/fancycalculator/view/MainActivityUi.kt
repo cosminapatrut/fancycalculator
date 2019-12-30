@@ -35,12 +35,12 @@ class MainActivityUi : UiComponent() {
             history = textView {
                 id = R.id.history
                 hint = "Result here"
-            }.lparams(org.jetbrains.anko.matchParent, org.jetbrains.anko.wrapContent) {
+            }.lparams(matchParent, wrapContent) {
             }
 
             result = textView {
                 id = R.id.result
-                hint = "Result here"
+                text = "0"
             }.lparams(matchParent, wrapContent) {
             }
 

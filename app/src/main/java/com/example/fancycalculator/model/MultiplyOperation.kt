@@ -4,8 +4,8 @@ import com.example.fancycalculator.model.base.BinaryOperation
 import com.example.fancycalculator.model.base.Operation
 
 
-class MultiplyOperation(baseValue: Double, secondValue: Double) : BinaryOperation(baseValue, secondValue),
+class MultiplyOperation(firstValue: Double, secondValue: Double) : BinaryOperation(firstValue, secondValue),
     Operation {
 
-    override fun getResult() = baseValue * secondValue
+    override fun getResult() = firstValue * secondValue
 }
