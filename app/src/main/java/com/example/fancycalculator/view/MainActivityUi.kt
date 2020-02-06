@@ -6,6 +6,8 @@ import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.view.marginLeft
+import androidx.core.view.marginTop
 import com.example.fancycalculator.R
 import org.jetbrains.anko.*
 
@@ -37,15 +39,15 @@ class MainActivityUi : UiComponent() {
             history = textView {
                 gravity = Gravity.RIGHT
                 id = R.id.history
-                hint = "Result here"
-                textColor = Color.BLACK
+                textColor = Color.WHITE
+                backgroundColor =  Color.BLACK
                 textSize = 16f
             }.lparams(matchParent, dip(100))
             result = textView {
                 id = R.id.result
                 gravity = Gravity.RIGHT
-                text = "Output here"
-                textColor = Color.BLACK
+                textColor = Color.WHITE
+                backgroundColor =  Color.BLACK
                 textSize = 19f
             }.lparams(matchParent, dip(100))
             linearLayout {
@@ -70,6 +72,7 @@ class MainActivityUi : UiComponent() {
                         }
                     }.lparams(wrapContent, wrapContent) {
                         weight = 1.0f
+                        margin = dip(6)
                     }
                     linearLayout {
                         orientation = LinearLayout.HORIZONTAL
@@ -85,6 +88,7 @@ class MainActivityUi : UiComponent() {
                         }
                     }.lparams(wrapContent, wrapContent) {
                         weight = 1.0f
+                        margin = dip(6)
                     }
                     linearLayout {
                         orientation = LinearLayout.HORIZONTAL
@@ -100,6 +104,7 @@ class MainActivityUi : UiComponent() {
                         }
                     }.lparams(wrapContent, wrapContent) {
                         weight = 1.0f
+                        margin = dip(6)
                     }
                     linearLayout {
                         orientation = LinearLayout.HORIZONTAL
@@ -118,6 +123,7 @@ class MainActivityUi : UiComponent() {
                             }
                     }.lparams(wrapContent, wrapContent) {
                         weight = 1.0f
+                        margin = dip(6)
                     }
                 }.lparams(wrapContent, matchParent) {
                     weight = 1.0f
@@ -165,13 +171,16 @@ class MainActivityUi : UiComponent() {
 
 class ButtonItemUi(number: String) : UiComponent() {
     var textBtn = number
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun createView() = layout {
         button {
             backgroundColor = Color.BLACK
-            textColor = Color.YELLOW
+            textColor = Color.BLACK
             text = textBtn
-            layoutParams = LinearLayout.LayoutParams(wrapContent, wrapContent).apply {
+            backgroundDrawable = context.getDrawable(R.drawable.rounded_button_border)
+            layoutParams = LinearLayout.LayoutParams(wrapContent, matchParent).apply {
                 weight = 1.0f
+                margin = dip(10)
             }
         }
     }
