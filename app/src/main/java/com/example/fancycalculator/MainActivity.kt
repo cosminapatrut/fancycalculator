@@ -20,10 +20,11 @@ class MainActivity : AppCompatActivity(), Calculator {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ui.setContentView(this)
-        setUp(ui)
+        setUpNavigationDrawer()
+        setUp()
     }
 
-    private fun setUp(ui: MainActivityUi) {
+    private fun setUp() {
         buttons = listOf(
             ui.zeroBtn,
             ui.oneBtn,
@@ -60,9 +61,15 @@ class MainActivity : AppCompatActivity(), Calculator {
         }
         buttons.forEach { it ->
             it.view.onClick {
-                it?.id?.let { it1 -> calculator.numberClicked(it1) }
+                it?.id?.let {
+                        numberId -> calculator.numberClicked(numberId)
+                }
             }
         }
+    }
+
+    private fun setUpNavigationDrawer() {
+
     }
 
     override fun setValue(value: String) {

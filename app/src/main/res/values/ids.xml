@@ -30,4 +30,7 @@
     <item name="symbolsLayout" type="id" />
     <item name="bottom_container" type="id"/>
 
+    <item name="right_drawer" type ="id" />
+    <item name="swipe_left_chevron" type="id" />
+
 </resources>

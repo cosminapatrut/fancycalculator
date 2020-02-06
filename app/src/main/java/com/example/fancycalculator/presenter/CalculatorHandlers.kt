@@ -1,6 +1,6 @@
 package com.example.fancycalculator.presenter
 
-interface CalculatorListeners {
+interface CalculatorHandlers {
 
     fun resetValueIfNeeded()
     fun setValue(value: String)
@@ -13,7 +13,6 @@ interface CalculatorListeners {
     fun calculateResult()
     fun handleOperation(operation: String)
     fun handleDelete()
-    fun handleReset()
     fun handleEquals()
     fun handleDot()
     fun zeroClicked()

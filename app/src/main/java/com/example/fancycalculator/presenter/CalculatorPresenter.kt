@@ -1,28 +1,26 @@
 package com.example.fancycalculator.presenter
 
 
-import android.content.Context
 import com.example.fancycalculator.R
 import com.example.fancycalculator.model.*
-import com.example.fancycalculator.model.Formatter
+import com.example.fancycalculator.model.Converter
 import com.example.fancycalculator.view.Calculator
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
 
-class CalculatorPresenter(operation: OperationImpl, calculator: Calculator) : CalculatorListeners{
-    var displayedNumber: String
-    lateinit  var displayedFormula: String
-    var lastKey: String? = null
+class CalculatorPresenter(private var operation: OperationImpl, calculator: Calculator) : CalculatorHandlers {
     private var history: String? = null
     private var calculator: Calculator? = calculator
-
     private var isFirstOperation = false
     private var resetValue = false
     private var wasPercentLast = false
     private var firstValue = 0.0
     private var secondValue: Double = 0.0
-    private var operation: OperationImpl = operation
+    private var displayedNumber: String
+    private var lastKey: String? = null
+    lateinit var displayedFormula: String
+
 
     init {
         displayedNumber = ""
@@ -34,23 +32,20 @@ class CalculatorPresenter(operation: OperationImpl, calculator: Calculator) : Ca
         if (lastKey == DIGIT) {
             handleResult()
         }
-
         resetValue = true
         lastKey = operation
         history = operation
-
     }
 
     override fun resetValueIfNeeded() {
-        if (resetValue)
+        if (resetValue) {
             displayedNumber = "0"
-
+        }
         resetValue = false
     }
 
     override fun setValue(value: String) {
-        if(calculator != null)
-        {
+        if (calculator != null) {
             calculator?.setValue(value)
         }
         displayedNumber = value
@@ -62,11 +57,11 @@ class CalculatorPresenter(operation: OperationImpl, calculator: Calculator) : Ca
     }
 
     override fun updateFormula() {
-        val first = Formatter.doubleToString(firstValue)
-        val second = Formatter.doubleToString(secondValue)
+        val first = firstValue.doubleToString()
+        val second = secondValue.doubleToString()
         val sign = getSign(history)
 
-            if (!sign.isEmpty()) {
+        if (!sign.isEmpty()) {
             var formula = first + sign + second
             if (wasPercentLast) {
                 formula += "%"
@@ -85,9 +80,8 @@ class CalculatorPresenter(operation: OperationImpl, calculator: Calculator) : Ca
         if (str.contains(".")) {
             return str
         }
-
-        val doubleValue = Formatter.stringToDouble(str)
-        return Formatter.doubleToString(doubleValue)
+        val doubleValue = str.stringToDouble()
+        return doubleValue.doubleToString()
     }
 
     override fun updateResult(value: Double) {
@@ -118,46 +112,44 @@ class CalculatorPresenter(operation: OperationImpl, calculator: Calculator) : Ca
     override fun calculateResult() {
         updateFormula()
 
-        val operationResult = history?.let { operation.forId(it, firstValue, secondValue) }
-        if (operationResult != null) {
-            updateResult(operationResult.getResult())
+        val operationResult = history?.let {
+            operation.forId(it, firstValue, secondValue)
+        }
+        operationResult.let {
+            if(it != null)
+                updateResult(it.getResult())
         }
 
         isFirstOperation = false
     }
 
     override fun handleDelete() {
-        if (displayedNumber.equals(NAN)) {
-            handleReset()
-        } else {
-            val oldValue = displayedNumber
-            var newValue = "0"
-            val len = oldValue.length
-            var minLen = 1
-            if (oldValue.contains("-"))
-                minLen++
-
-            if (len > minLen) {
-                newValue = oldValue.substring(0, len - 1)
-            }
-
-            newValue = newValue.replace("\\.$".toRegex(), "")
-            newValue = formatString(newValue)
-            setValue(newValue)
-            firstValue = Formatter.stringToDouble(newValue)
+        val oldValue = displayedNumber
+        var newValue = "0"
+        val len = oldValue.length
+        var minLen = 1
+        if (oldValue.contains("-")) {
+            minLen++
         }
-    }
 
-    override fun handleReset() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (len > minLen) {
+            newValue = oldValue.substring(0, len - 1)
+        }
+
+        newValue = newValue.replace("\\.$".toRegex(), "")
+        newValue = formatString(newValue)
+        setValue(newValue)
+        firstValue = newValue.stringToDouble()
     }
 
     override fun handleEquals() {
-        if (lastKey == EQUALS)
+        if (lastKey == EQUALS) {
             calculateResult()
+        }
 
-        if (lastKey != DIGIT)
+        if (lastKey != DIGIT) {
             return
+        }
 
         displayedNumber.let {
             secondValue = it.replace(",", "").toDouble()
@@ -186,10 +178,6 @@ class CalculatorPresenter(operation: OperationImpl, calculator: Calculator) : Ca
         MINUS -> "-"
         MULTIPLY -> "*"
         DIVIDE -> "/"
-        PERCENT -> "%"
-        POWER -> "^"
-        ROOT -> "√"
-        FACTORIAL -> "!"
         else -> ""
     }
 
@@ -214,5 +202,4 @@ class CalculatorPresenter(operation: OperationImpl, calculator: Calculator) : Ca
             R.id.button_nine -> addDigit(9)
         }
     }
-
 }

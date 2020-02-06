@@ -9,15 +9,7 @@ class OperationImpl : OperationFactory {
             MINUS -> MinusOperation(firstValue, secondValue)
             DIVIDE -> DivideOperation(firstValue, secondValue)
             MULTIPLY -> MultiplyOperation(firstValue, secondValue)
-//            PERCENT -> PercentOperation(baseValue, secondValue)
-//            POWER -> PowerOperation(baseValue, secondValue)
-//            ROOT -> RootOperation(baseValue)
-//            FACTORIAL -> FactorialOperation(baseValue)
             else -> null
         }
     }
-
-
-
-
 }
