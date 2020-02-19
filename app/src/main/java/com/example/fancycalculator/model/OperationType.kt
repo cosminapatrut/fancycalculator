@@ -1,9 +1,12 @@
 package com.example.fancycalculator.model
 
-const val PLUS = "plus"
-const val MINUS = "minus"
-const val MULTIPLY = "multiply"
-const val DIVIDE = "divide"
-const val DIGIT = "digit"
-const val EQUALS = "equals"
-
+enum class OperationType(
+    val key: String
+) {
+    PLUS("plus"),
+    MINUS("minus"),
+    MULTIPLY("multiply"),
+    DIVIDE("divide"),
+    DIGIT("digit"),
+    EQUALS("equals")
+}
