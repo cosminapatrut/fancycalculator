@@ -1,6 +1,7 @@
 package com.example.fancycalculator.presenter
 
 
+import android.net.wifi.aware.WifiAwareSession
 import com.example.fancycalculator.model.*
 import com.example.fancycalculator.view.Calculator
 import java.text.DecimalFormat
@@ -13,7 +14,6 @@ class CalculatorPresenterImpl(private var operation: OperationFactoryImpl, calcu
     private var calculator: Calculator? = calculator
     private var isFirstOperation = false
     private var resetValue = false
-    private var wasPercentLast = false
     private var firstValue = 0.0
     private var secondValue: Double = 0.0
     private var displayedNumber: String
@@ -27,12 +27,24 @@ class CalculatorPresenterImpl(private var operation: OperationFactoryImpl, calcu
     }
 
     override fun handleOperation(operation: String) {
-        if (lastKey == DIGIT.key) {
+        if (lastKey == DIGIT.key &&
+                operation != ROOT.key) {
             handleResult()
         }
+
         resetValue = true
         lastKey = operation
         history = operation
+
+        if(operation == ROOT.key){
+            handleRoot()
+            resetValue = false
+        }
+
+        if(operation == PERCENT.key) {
+            handlePercent()
+            resetValue = false
+        }
     }
 
     override fun resetValueIfNeeded() {
@@ -59,12 +71,19 @@ class CalculatorPresenterImpl(private var operation: OperationFactoryImpl, calcu
         val second = secondValue.doubleToString()
         val sign = getSign(history)
 
-        if (!sign.isEmpty()) {
-            var formula = first + sign + second
-            if (wasPercentLast) {
-                formula += "%"
+        when(sign) {
+            "√" -> {
+                setFormula(sign + first)
             }
-            setFormula(formula)
+            "%" -> {
+                setFormula(first + sign)
+            }
+            else -> {
+                if (sign.isNotEmpty()){
+                    var formula = first + sign + second
+                    setFormula(formula)
+                }
+            }
         }
     }
 
@@ -99,11 +118,11 @@ class CalculatorPresenterImpl(private var operation: OperationFactoryImpl, calcu
 
     override fun handleResult() {
         displayedNumber.let {
-            secondValue = it.replace(",", "").toDouble()
+            firstValue = it.replace(",", "").toDouble()
         }
         calculateResult()
         displayedNumber.let {
-            firstValue = it.replace(",", "").toDouble()
+            secondValue = it.replace(",", "").toDouble()
         }
     }
 
@@ -113,6 +132,7 @@ class CalculatorPresenterImpl(private var operation: OperationFactoryImpl, calcu
         val operationResult = history?.let {
             operation.forId(it, firstValue, secondValue)
         }
+
         operationResult.let {
             if(it != null)
                 updateResult(it.getResult())
@@ -176,15 +196,30 @@ class CalculatorPresenterImpl(private var operation: OperationFactoryImpl, calcu
         MINUS.key -> "-"
         MULTIPLY.key -> "*"
         DIVIDE.key -> "/"
+        ROOT.key -> "√"
+        POWER.key -> "^"
+        PERCENT.key -> "%"
         else -> ""
     }
 
     override fun checkLastDigit() {
-        if (lastKey == EQUALS.key) {
-            history = EQUALS.key
+
+        when(lastKey) {
+            EQUALS.key -> {
+                history = EQUALS.key
+            }
         }
 
         lastKey = DIGIT.key
         resetValueIfNeeded()
+    }
+
+    fun handleRoot() {
+        firstValue = displayedNumber.stringToDouble()
+        calculateResult()
+    }
+
+    fun handlePercent() {
+        calculateResult()
     }
 }

@@ -10,6 +10,9 @@ class OperationFactoryImpl: OperationFactory {
             MINUS.key -> MinusOperationImpl(firstValue, secondValue)
             DIVIDE.key -> DivideOperationImpl(firstValue, secondValue)
             MULTIPLY.key -> MultiplyOperationImpl(firstValue, secondValue)
+            ROOT.key -> RootOperationImpl(firstValue)
+            POWER.key -> PowerOperationImpl(firstValue, secondValue)
+            PERCENT.key -> PercentOperationImpl(firstValue)
             else -> null
         }
     }

@@ -51,6 +51,15 @@ class MainActivity : AppCompatActivity(), Calculator {
         ui.divideBtn.view.onClick {
             calculator.handleOperation(DIVIDE.key)
         }
+        ui.rootBtn.view.onClick {
+            calculator.handleOperation(ROOT.key)
+        }
+        ui.powerBtn.view.onClick {
+            calculator.handleOperation(POWER.key)
+        }
+        ui.percentBtn.view.onClick {
+            calculator.handleOperation(PERCENT.key)
+        }
         ui.equalBtn.view.onClick {
             calculator.handleEquals()
         }
@@ -60,6 +69,7 @@ class MainActivity : AppCompatActivity(), Calculator {
         ui.dotBtn.view.onClick {
             calculator.handleDot()
         }
+
         buttons.forEach { it ->
             it.view.onClick {
                 it?.id?.let {
@@ -83,7 +93,6 @@ class MainActivity : AppCompatActivity(), Calculator {
 
     fun numberClicked(id: Int) {
         calculator.checkLastDigit()
-
         when (id) {
             R.id.button_zero -> calculator.zeroClicked()
             R.id.button_one -> calculator.addDigit(1)
