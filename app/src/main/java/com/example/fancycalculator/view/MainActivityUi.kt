@@ -42,14 +42,18 @@ class MainActivityUi : UiComponent() {
                 textColor = Color.WHITE
                 backgroundColor =  Color.BLACK
                 textSize = 16f
-            }.lparams(matchParent, dip(100))
+            }.lparams(matchParent, wrapContent) {
+                weight = 1.0f
+            }
             result = textView {
                 id = R.id.result
                 gravity = Gravity.RIGHT
                 textColor = Color.WHITE
                 backgroundColor =  Color.BLACK
                 textSize = 19f
-            }.lparams(matchParent, dip(100))
+            }.lparams(matchParent, wrapContent) {
+                weight = 1.0f
+            }
             linearLayout {
                 id = R.id.bottom_container
                 orientation = LinearLayout.HORIZONTAL
