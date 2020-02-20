@@ -6,7 +6,6 @@ import com.example.fancycalculator.view.Calculator
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
-import com.example.fancycalculator.model.OperationType
 import com.example.fancycalculator.model.OperationType.*
 
 class CalculatorPresenterImpl(private var operation: OperationFactoryImpl, calculator: Calculator) : CalculatorPresenter {
