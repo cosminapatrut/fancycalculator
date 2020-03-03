@@ -166,16 +166,6 @@ class MainActivityUi : UiComponent() {
                 }.lparams(wrapContent, matchParent) {
                     weight = 1.0f
                 }
-                linearLayout{
-                id = R.id.right_drawer
-                backgroundColor = Color.YELLOW
-                    imageView {
-                        id = R.id.swipe_left_chevron
-                        backgroundResource = R.drawable.ic_left_chevron
-                    }.lparams(wrapContent, wrapContent) {
-                        gravity = Gravity.CENTER_VERTICAL
-                    }
-                }.lparams(dip(10), matchParent)
             }.lparams(matchParent, dip(400))
             layoutParams = LinearLayout.LayoutParams(matchParent, matchParent).apply {
             }
