@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity(), Calculator {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ui.setContentView(this)
-        setUpNavigationDrawer()
         setUp()
     }
 
@@ -77,10 +76,6 @@ class MainActivity : AppCompatActivity(), Calculator {
                 }
             }
         }
-    }
-
-    private fun setUpNavigationDrawer() {
-
     }
 
     override fun setValue(value: String) {

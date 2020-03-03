@@ -214,12 +214,12 @@ class CalculatorPresenterImpl(private var operation: OperationFactoryImpl, calcu
         resetValueIfNeeded()
     }
 
-    fun handleRoot() {
+    private fun handleRoot() {
         firstValue = displayedNumber.stringToDouble()
         calculateResult()
     }
 
-    fun handlePercent() {
+    private fun handlePercent() {
         calculateResult()
     }
 }
