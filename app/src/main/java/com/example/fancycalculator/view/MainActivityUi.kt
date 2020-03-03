@@ -32,6 +32,9 @@ class MainActivityUi : UiComponent() {
     lateinit var multiplyBtn: ButtonItemUi
     lateinit var minusBtn: ButtonItemUi
     lateinit var plusBtn: ButtonItemUi
+    lateinit var rootBtn: ButtonItemUi
+    lateinit var powerBtn: ButtonItemUi
+    lateinit var percentBtn: ButtonItemUi
 
     override fun createView() = layout {
         verticalLayout {
@@ -42,14 +45,18 @@ class MainActivityUi : UiComponent() {
                 textColor = Color.WHITE
                 backgroundColor =  Color.BLACK
                 textSize = 16f
-            }.lparams(matchParent, dip(100))
+            }.lparams(matchParent, wrapContent) {
+                weight = 1.0f
+            }
             result = textView {
                 id = R.id.result
                 gravity = Gravity.RIGHT
                 textColor = Color.WHITE
                 backgroundColor =  Color.BLACK
                 textSize = 19f
-            }.lparams(matchParent, dip(100))
+            }.lparams(matchParent, wrapContent) {
+                weight = 1.0f
+            }
             linearLayout {
                 id = R.id.bottom_container
                 orientation = LinearLayout.HORIZONTAL
@@ -61,6 +68,25 @@ class MainActivityUi : UiComponent() {
                     linearLayout {
                         orientation = LinearLayout.HORIZONTAL
                         backgroundColor = Color.BLACK
+                        percentBtn = include(ButtonItemUi("%")) {
+                            view.id = R.id.button_percent
+                        }
+                        powerBtn = include(ButtonItemUi("^")) {
+                            view.id = R.id.button_power
+                        }
+                        rootBtn = include(ButtonItemUi("√")) {
+                            view.id = R.id.button_root
+                        }
+                        delBtn = include(ButtonItemUi("DEL")) {
+                            view.id = R.id.button_del
+                        }
+                    }.lparams(wrapContent, wrapContent) {
+                        weight = 1.0f
+                        margin = dip(6)
+                    }
+                    linearLayout {
+                        orientation = LinearLayout.HORIZONTAL
+                        backgroundColor = Color.BLACK
                         sevenBtn = include(ButtonItemUi("7")) {
                             view.id = R.id.button_seven
                         }
@@ -69,6 +95,9 @@ class MainActivityUi : UiComponent() {
                         }
                         nineBtn = include(ButtonItemUi("9")) {
                             view.id = R.id.button_nine
+                        }
+                        divideBtn = include(ButtonItemUi("/")) {
+                            view.id = R.id.button_divide
                         }
                     }.lparams(wrapContent, wrapContent) {
                         weight = 1.0f
@@ -86,6 +115,9 @@ class MainActivityUi : UiComponent() {
                         sixBtn = include(ButtonItemUi("6")) {
                             view.id = R.id.button_six
                         }
+                        multiplyBtn = include(ButtonItemUi("x")) {
+                            view.id = R.id.button_multiply
+                        }
                     }.lparams(wrapContent, wrapContent) {
                         weight = 1.0f
                         margin = dip(6)
@@ -101,6 +133,9 @@ class MainActivityUi : UiComponent() {
                         }
                         threeBtn = include(ButtonItemUi("3")) {
                             view.id = R.id.button_three
+                        }
+                        minusBtn = include(ButtonItemUi("-")) {
+                            view.id = R.id.button_minus
                         }
                     }.lparams(wrapContent, wrapContent) {
                         weight = 1.0f
@@ -121,6 +156,9 @@ class MainActivityUi : UiComponent() {
                             include(ButtonItemUi("=")) {
                                 view.id = R.id.button_equal
                             }
+                        plusBtn = include(ButtonItemUi("+")) {
+                            view.id = R.id.button_plus
+                        }
                     }.lparams(wrapContent, wrapContent) {
                         weight = 1.0f
                         margin = dip(6)
@@ -128,30 +166,6 @@ class MainActivityUi : UiComponent() {
                 }.lparams(wrapContent, matchParent) {
                     weight = 1.0f
                 }
-                linearLayout {
-                    gravity = Gravity.BOTTOM
-                    id = R.id.symbolsLayout
-                    backgroundColor = Color.BLACK
-                    orientation = LinearLayout.VERTICAL
-                    delBtn = include(ButtonItemUi("DEL")) {
-                        view.id = R.id.button_del
-                    }
-                    divideBtn = include(ButtonItemUi("/")) {
-                        view.id = R.id.button_divide
-                    }
-                    multiplyBtn = include(ButtonItemUi("x")) {
-                        view.id = R.id.button_multiply
-                    }
-                    minusBtn = include(ButtonItemUi("-")) {
-                        view.id = R.id.button_minus
-                    }
-                    plusBtn = include(ButtonItemUi("+")) {
-                        view.id = R.id.button_plus
-                    }
-                }.lparams(wrapContent, matchParent) {
-                    weight = 1.0f
-                }
-
                 linearLayout{
                 id = R.id.right_drawer
                 backgroundColor = Color.YELLOW

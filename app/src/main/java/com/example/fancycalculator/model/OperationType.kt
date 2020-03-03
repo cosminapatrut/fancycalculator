@@ -8,5 +8,8 @@ enum class OperationType(
     MULTIPLY("multiply"),
     DIVIDE("divide"),
     DIGIT("digit"),
-    EQUALS("equals")
+    EQUALS("equals"),
+    ROOT("root"),
+    POWER("power"),
+    PERCENT("%")
 }
